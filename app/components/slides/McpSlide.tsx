@@ -5,22 +5,20 @@ import Toast from '../Toast'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://iconifika.kitifica.com'
 
-const config = `{
-  "mcpServers": {
-    "iconifika": {
-      "command": "npx",
-      "args": ["-y", "iconifika-mcp"],
-      "env": {
-        "ICONIFIKA_BASE_URL": "${BASE}"
-      }
-    }
-  }
-}`
+const commands = [
+  {
+    label: 'HTTP · recomendado',
+    cmd: `claude mcp add iconifika --transport http ${BASE}/api/mcp`,
+  },
+  {
+    label: 'stdio · con npx',
+    cmd: 'claude mcp add iconifika --command npx -- -y iconifika-mcp',
+  },
+]
 
 export default function McpSlide() {
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState<number | null>(null)
   const [toast, setToast] = useState(false)
-  const codeRef = useRef<HTMLPreElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -32,10 +30,10 @@ export default function McpSlide() {
     return () => ctx.revert()
   }, [])
 
-  function copy() {
-    navigator.clipboard.writeText(config)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  function copy(idx: number, cmd: string) {
+    navigator.clipboard.writeText(cmd)
+    setCopied(idx)
+    setTimeout(() => setCopied(null), 2000)
   }
 
   return (
@@ -47,31 +45,30 @@ export default function McpSlide() {
           <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>MCP</span>
         </h2>
         <p className="text-zinc-400 text-sm max-w-md">
-          Instala Iconifika como herramienta MCP en tu agente de IA. Claude, Cursor y cualquier LLM compatible podrán pedir iconos directamente.
+          Un comando en tu terminal y Claude, Cursor o cualquier LLM tendrán acceso a +200k iconos SVG.
         </p>
       </div>
 
-      <div className="mcp-code w-full max-w-xl relative">
-        <p className="text-xs text-zinc-500 uppercase tracking-widest mb-3">
-          Agrega esto a <code className="text-zinc-400">~/.claude/settings.json</code>
-        </p>
-        <pre
-          ref={codeRef}
-          className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-xs text-zinc-300 overflow-x-auto"
-        >
-          {config}
-        </pre>
-        <button
-          onClick={copy}
-          className="absolute top-10 right-4 text-xs text-zinc-500 hover:text-white transition-colors px-3 py-1 border border-zinc-700 rounded-lg"
-        >
-          {copied ? '¡Copiado!' : 'Copiar'}
-        </button>
+      <div className="mcp-code w-full max-w-2xl flex flex-col gap-3">
+        {commands.map((c, i) => (
+          <div key={i} className="relative">
+            <p className="text-xs text-zinc-600 uppercase tracking-widest mb-1">{c.label}</p>
+            <div className="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-4">
+              <code className="flex-1 text-emerald-400 text-sm font-mono break-all">{c.cmd}</code>
+              <button
+                onClick={() => copy(i, c.cmd)}
+                className="flex-shrink-0 text-xs text-zinc-500 hover:text-white transition-colors px-3 py-1 border border-zinc-700 rounded-lg"
+              >
+                {copied === i ? '✓' : 'Copiar'}
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="flex items-center gap-4">
         <p className="mcp-hint text-zinc-600 text-sm text-center">
-          Funciona con Claude Code · Cursor · cualquier LLM compatible con MCP
+          Claude Code · Cursor · cualquier cliente MCP compatible
         </p>
         <button
           onClick={() => setToast(true)}
@@ -87,7 +84,7 @@ export default function McpSlide() {
 
       {toast && (
         <Toast
-          message="1. Copia el JSON de arriba. 2. Pégalo en ~/.claude/settings.json (Claude Code) o en la config MCP de tu editor. 3. Reinicia el agente. Desde ese momento puedes pedirle al LLM que use get_icon, search_icons o list_sets directamente."
+          message="HTTP (recomendado): copia el primer comando y pégalo en tu terminal. No instala nada, usa el servidor directamente. stdio: requiere Node.js instalado. Ambos dan acceso a get_icon, search_icons y list_sets desde Claude Code o Cursor."
           onClose={() => setToast(false)}
         />
       )}
