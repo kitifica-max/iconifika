@@ -9,7 +9,7 @@ export type SetInfo = { id: string; name: string; total: number }
 function getCollectionsPath(): string {
   // locate('mdi') → .../node_modules/@iconify/json/json/mdi.json
   // collections.json is two levels up
-  return join(dirname(dirname(locate('mdi'))), 'collections.json')
+  return join(dirname(dirname(locate('mdi') as unknown as string)), 'collections.json')
 }
 
 function loadCollections(): Record<string, any> {
