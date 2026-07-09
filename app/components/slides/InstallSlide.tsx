@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 const MCP_URL = 'https://iconifika.kitifica.com/api/mcp'
-const SKILL_URL = 'https://iconifika.kitifica.com/iconifika-install.skill'
+const SKILL_URL = 'https://iconifika.kitifica.com/iconifika.skill'
 
 type Client = {
   id: string
