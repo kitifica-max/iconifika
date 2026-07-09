@@ -65,7 +65,7 @@ export default function HeroSlide() {
             width={600}
             height={200}
             priority
-            className="w-[clamp(280px,55vw,700px)] h-auto"
+            className="w-[clamp(160px,28vw,380px)] h-auto"
           />
         </h1>
         <p ref={subRef} className="mt-6 text-zinc-400 text-lg tracking-widest uppercase">
