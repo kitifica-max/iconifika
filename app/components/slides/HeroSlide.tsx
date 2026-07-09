@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { gsap } from 'gsap'
 import { HERO_ICONS } from './icons'
 
@@ -69,13 +70,15 @@ export default function HeroSlide() {
       ))}
 
       <div className="text-center z-10 px-8">
-        <h1
-          ref={titleRef}
-          className="text-[clamp(5rem,18vw,14rem)] font-black leading-none tracking-tighter uppercase"
-          style={{ fontVariationSettings: '"wght" 900' }}
-        >
-          ICONI<br />
-          <span className="text-transparent" style={{ WebkitTextStroke: '3px white' }}>FIKA</span>
+        <h1 ref={titleRef} className="flex justify-center">
+          <Image
+            src="/iconifica_w.svg"
+            alt="Iconifika"
+            width={600}
+            height={200}
+            priority
+            className="w-[clamp(280px,55vw,700px)] h-auto"
+          />
         </h1>
         <p
           ref={subRef}
