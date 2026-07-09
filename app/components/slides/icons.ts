@@ -1,10 +1,14 @@
-export const HERO_ICONS = [
-  { name: 'button', svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="5"/><line x1="8" y1="12" x2="16" y2="12"/></svg>` },
-  { name: 'toggle', svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="6" width="22" height="12" rx="6"/><circle cx="17" cy="12" r="4" fill="currentColor"/></svg>` },
-  { name: 'input', svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="10" y1="9" x2="10" y2="15"/></svg>` },
-  { name: 'card', svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="6" y1="15" x2="10" y2="15"/><line x1="6" y1="18" x2="14" y2="18"/></svg>` },
-  { name: 'nav', svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="4" rx="1"/><line x1="6" y1="5" x2="6" y2="5"/><line x1="10" y1="5" x2="10" y2="5"/><line x1="14" y1="5" x2="18" y2="5"/></svg>` },
-  { name: 'modal', svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="22" height="22" rx="2" stroke-opacity="0.3"/><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="12" x2="13" y2="12"/><line x1="14" y1="17" x2="17" y2="17"/></svg>` },
-  { name: 'badge', svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="8" rx="4"/><line x1="8" y1="12" x2="16" y2="12"/></svg>` },
-  { name: 'avatar', svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="9" r="3"/><path d="M6.5 19a6 6 0 0 1 11 0"/></svg>` },
+// Icon identifiers to fetch from Iconifika API for the hero background
+export const HERO_ICON_IDS = [
+  { set: 'material-symbols', name: 'api' },
+  { set: 'material-symbols', name: 'code' },
+  { set: 'material-symbols', name: 'terminal' },
+  { set: 'material-symbols', name: 'bolt' },
+  { set: 'material-symbols', name: 'layers' },
+  { set: 'mdi', name: 'grid' },
+  { set: 'solar', name: 'cursor-bold' },
+  { set: 'tabler', name: 'sparkle' },
 ]
+
+// ponytail: keep empty export for any legacy imports
+export const HERO_ICONS: { name: string; svg: string }[] = []

@@ -2,8 +2,10 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { gsap } from 'gsap'
-import { HERO_ICONS } from './icons'
+import { HERO_ICON_IDS } from './icons'
 import Toast from '../Toast'
+
+const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 
 const positions = [
   { top: '8%', left: '5%', size: 56, rotate: -15 },
@@ -20,28 +22,41 @@ export default function HeroSlide() {
   const iconRefs = useRef<(HTMLDivElement | null)[]>([])
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subRef = useRef<HTMLParagraphElement>(null)
+  const [icons, setIcons] = useState<{ name: string; svg: string }[]>([])
   const [toast, setToast] = useState(false)
 
   useEffect(() => {
+    Promise.all(
+      HERO_ICON_IDS.map(async ({ set, name }) => {
+        const res = await fetch(`${BASE}/api/icon/${set}/${name}?color=ffffff`)
+        if (!res.ok) return null
+        const svg = await res.text()
+        return { name: `${set}:${name}`, svg }
+      })
+    ).then(results => setIcons(results.filter(Boolean) as { name: string; svg: string }[]))
+  }, [])
+
+  useEffect(() => {
+    if (icons.length === 0) return
     const ctx = gsap.context(() => {
       gsap.from(titleRef.current, { y: 80, opacity: 0, duration: 1, ease: 'power4.out', delay: 0.1 })
       gsap.from(subRef.current, { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.5 })
       iconRefs.current.forEach((el, i) => {
         if (!el) return
-        gsap.from(el, { scale: 0, opacity: 0, rotation: positions[i].rotate * 2, duration: 0.6, ease: 'back.out(1.7)', delay: 0.2 + i * 0.08 })
+        gsap.from(el, { scale: 0, opacity: 0, rotation: positions[i]?.rotate * 2, duration: 0.6, ease: 'back.out(1.7)', delay: 0.2 + i * 0.08 })
         gsap.to(el, { y: `${Math.sin(i) > 0 ? '+' : '-'}=12`, duration: 2.5 + i * 0.3, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * 0.2 })
       })
     })
     return () => ctx.revert()
-  }, [])
+  }, [icons])
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center select-none">
-      {HERO_ICONS.map((icon, i) => (
+      {icons.map((icon, i) => (
         <div
           key={icon.name}
           ref={el => { iconRefs.current[i] = el }}
-          className="absolute pointer-events-none"
+          className="absolute pointer-events-none [&_svg]:w-full [&_svg]:h-full"
           style={{
             top: (positions[i] as { top?: string }).top,
             left: (positions[i] as { left?: string }).left,
