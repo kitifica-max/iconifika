@@ -1,10 +1,10 @@
-import { searchIcons } from '@/lib/iconify'
 import { NextRequest } from 'next/server'
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
 }
+const ICONIFY = 'https://api.iconify.design'
 
 export function OPTIONS() {
   return new Response(null, { status: 204, headers: CORS })
@@ -19,10 +19,25 @@ export async function GET(request: NextRequest) {
     return Response.json({ error: 'q parameter required' }, { status: 400, headers: CORS })
   }
 
-  const results = searchIcons(q, set, limit)
+  const url = new URL(`${ICONIFY}/search`)
+  url.searchParams.set('query', q)
+  url.searchParams.set('limit', String(limit))
+  if (set) url.searchParams.set('prefix', set)
+
+  const upstream = await fetch(url.toString(), { next: { revalidate: 300 } })
+  if (!upstream.ok) {
+    return Response.json({ error: 'Search failed' }, { status: 502, headers: CORS })
+  }
+
+  const data = await upstream.json()
+  // Iconify returns { icons: ["prefix:name", ...], total: N }
+  const results = (data.icons ?? []).map((id: string) => {
+    const [iconSet, ...rest] = id.split(':')
+    return { set: iconSet, name: rest.join(':') }
+  })
 
   return Response.json(
-    { results, total: results.length, query: q },
+    { results, total: data.total ?? results.length, query: q },
     { headers: { ...CORS, 'Cache-Control': 'public, max-age=300' } }
   )
 }

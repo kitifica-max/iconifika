@@ -5,7 +5,7 @@ import Toast from '../Toast'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 
-type Result = { set: string; name: string; body: string }
+type Result = { set: string; name: string }
 
 const SUGGESTIONS = ['home', 'user', 'settings', 'bell', 'search', 'arrow']
 
@@ -94,9 +94,10 @@ export default function SearchSlide() {
               title={`${r.set}:${r.name}`}
               className="flex flex-col items-center gap-1 p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-600 transition-colors cursor-default group"
             >
-              <div
-                className="w-8 h-8 text-white/70 group-hover:text-white transition-colors"
-                dangerouslySetInnerHTML={{ __html: `<svg viewBox="0 0 24 24" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">${r.body}</svg>` }}
+              <img
+                src={`${BASE}/api/icon/${r.set}/${r.name}?color=ffffff`}
+                alt={r.name}
+                className="w-8 h-8 opacity-70 group-hover:opacity-100 transition-opacity"
               />
               <span className="text-zinc-600 text-[10px] truncate w-full text-center group-hover:text-zinc-400">{r.name}</span>
             </div>
