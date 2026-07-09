@@ -1,14 +1,15 @@
 'use client'
 import { useEffect, useRef, useState, useCallback } from 'react'
+import Image from 'next/image'
 import { gsap } from 'gsap'
 import dynamic from 'next/dynamic'
 
 const slides = [
-  dynamic(() => import('./slides/HeroSlide')),
-  dynamic(() => import('./slides/StatsSlide')),
-  dynamic(() => import('./slides/GetIconSlide')),
-  dynamic(() => import('./slides/SearchSlide')),
-  dynamic(() => import('./slides/McpSlide')),
+  { component: dynamic(() => import('./slides/HeroSlide')), label: 'Inicio' },
+  { component: dynamic(() => import('./slides/StatsSlide')), label: 'Por qué' },
+  { component: dynamic(() => import('./slides/GetIconSlide')), label: 'Obtener icono' },
+  { component: dynamic(() => import('./slides/SearchSlide')), label: 'Buscar' },
+  { component: dynamic(() => import('./slides/McpSlide')), label: 'MCP' },
 ]
 
 export default function Slideshow() {
@@ -17,7 +18,6 @@ export default function Slideshow() {
   const currentRef = useRef(0)
   const slideRefs = useRef<(HTMLDivElement | null)[]>([])
 
-  // Set initial positions via GSAP (not inline style) to avoid React re-render resets
   useEffect(() => {
     slideRefs.current.forEach((el, i) => {
       if (el) gsap.set(el, { x: i === 0 ? '0%' : '100%' })
@@ -27,21 +27,14 @@ export default function Slideshow() {
   const goTo = useCallback((next: number) => {
     if (animating.current || next === currentRef.current || next < 0 || next >= slides.length) return
     animating.current = true
-
     const from = currentRef.current
     const dir = next > from ? 1 : -1
     const currentEl = slideRefs.current[from]
     const nextEl = slideRefs.current[next]
     if (!currentEl || !nextEl) { animating.current = false; return }
-
     gsap.set(nextEl, { x: `${dir * 100}%` })
-
     const tl = gsap.timeline({
-      onComplete: () => {
-        currentRef.current = next
-        setCurrent(next)
-        animating.current = false
-      },
+      onComplete: () => { currentRef.current = next; setCurrent(next); animating.current = false },
     })
     tl.to(currentEl, { x: `${-dir * 100}%`, duration: 0.7, ease: 'power3.inOut' })
     tl.to(nextEl, { x: '0%', duration: 0.7, ease: 'power3.inOut' }, '<')
@@ -64,50 +57,94 @@ export default function Slideshow() {
   }
 
   return (
-    <div
-      className="relative w-screen h-screen overflow-hidden"
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
-      {slides.map((Slide, i) => (
-        <div
-          key={i}
-          ref={el => { slideRefs.current[i] = el }}
-          className="absolute inset-0 w-full h-full"
-        >
-          <Slide />
-        </div>
-      ))}
-
-      {current > 0 && (
-        <button
-          onClick={() => goTo(current - 1)}
-          className="absolute left-6 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors text-3xl z-50 select-none"
-          aria-label="Previous"
-        >
-          ←
+    <div className="flex flex-col w-screen h-screen overflow-hidden">
+      {/* Header nav */}
+      <header className="flex-shrink-0 flex items-center justify-between px-6 py-4 z-50 border-b border-zinc-900">
+        <button onClick={() => goTo(0)} className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity">
+          <Image src="/iconifica_w.svg" alt="Iconifika" width={120} height={40} className="h-7 w-auto" />
         </button>
-      )}
-      {current < slides.length - 1 && (
-        <button
-          onClick={() => goTo(current + 1)}
-          className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors text-3xl z-50 select-none"
-          aria-label="Next"
+        <nav className="hidden sm:flex items-center gap-1">
+          {slides.map((s, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className={`px-3 py-1.5 rounded-lg text-xs tracking-wide transition-colors ${
+                current === i ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-white'
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </nav>
+        <a
+          href="https://github.com/kitifica-max/iconifika"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-zinc-500 hover:text-white text-xs tracking-wide transition-colors"
         >
-          →
-        </button>
-      )}
+          GitHub ↗
+        </a>
+      </header>
 
-      <div className="absolute bottom-8 right-8 flex gap-2 z-50">
-        {slides.map((_, i) => (
-          <button
+      {/* Slides */}
+      <div
+        className="relative flex-1 overflow-hidden"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        {slides.map(({ component: Slide }, i) => (
+          <div
             key={i}
-            onClick={() => goTo(i)}
-            className={`w-1.5 h-1.5 rounded-full transition-all ${i === current ? 'bg-white w-4' : 'bg-zinc-600'}`}
-            aria-label={`Slide ${i + 1}`}
-          />
+            ref={el => { slideRefs.current[i] = el }}
+            className="absolute inset-0 w-full h-full"
+          >
+            <Slide />
+          </div>
         ))}
+
+        {current > 0 && (
+          <button
+            onClick={() => goTo(current - 1)}
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors text-2xl z-50 select-none"
+            aria-label="Anterior"
+          >←</button>
+        )}
+        {current < slides.length - 1 && (
+          <button
+            onClick={() => goTo(current + 1)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors text-2xl z-50 select-none"
+            aria-label="Siguiente"
+          >→</button>
+        )}
+
+        <div className="absolute bottom-4 right-6 flex gap-2 z-50">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'bg-white w-4' : 'bg-zinc-600 w-1.5'}`}
+              aria-label={`Ir a ${slides[i].label}`}
+            />
+          ))}
+        </div>
       </div>
+
+      {/* Footer */}
+      <footer className="flex-shrink-0 flex items-center justify-between px-6 py-3 border-t border-zinc-900 z-50">
+        <p className="text-zinc-600 text-xs">
+          Potenciado por{' '}
+          <a href="https://iconify.design" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors">
+            Iconify
+          </a>
+          {' '}· Gratis y de código abierto
+        </p>
+        <p className="text-zinc-600 text-xs">
+          Un proyecto de{' '}
+          <a href="https://kitifica.com" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors">
+            Kitifica
+          </a>
+        </p>
+      </footer>
     </div>
   )
 }

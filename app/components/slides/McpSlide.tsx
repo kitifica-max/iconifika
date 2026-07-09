@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
+import Toast from '../Toast'
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://iconifika.netlify.app'
+const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://iconifika.kitifica.com'
 
 const config = `{
   "mcpServers": {
@@ -18,6 +19,7 @@ const config = `{
 
 export default function McpSlide() {
   const [copied, setCopied] = useState(false)
+  const [toast, setToast] = useState(false)
   const codeRef = useRef<HTMLPreElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -37,18 +39,21 @@ export default function McpSlide() {
   }
 
   return (
-    <div ref={containerRef} className="relative w-full h-full flex flex-col items-center justify-center px-12 gap-10">
+    <div ref={containerRef} className="relative w-full h-full flex flex-col items-center justify-center px-12 gap-8">
       <div className="text-center">
-        <p className="text-zinc-500 text-xs tracking-widest uppercase mb-4">For AI Workflows</p>
-        <h2 className="mcp-title text-[clamp(2.5rem,6vw,5rem)] font-black leading-none tracking-tighter uppercase">
-          MCP<br />
-          <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>READY</span>
+        <p className="text-zinc-500 text-xs tracking-widest uppercase mb-2">Para flujos con IA</p>
+        <h2 className="mcp-title text-[clamp(2rem,5vw,4rem)] font-black leading-none tracking-tighter uppercase mb-3">
+          Listo para{' '}
+          <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>MCP</span>
         </h2>
+        <p className="text-zinc-400 text-sm max-w-md">
+          Instala Iconifika como herramienta MCP en tu agente de IA. Claude, Cursor y cualquier LLM compatible podrán pedir iconos directamente.
+        </p>
       </div>
 
       <div className="mcp-code w-full max-w-xl relative">
         <p className="text-xs text-zinc-500 uppercase tracking-widest mb-3">
-          Add to <code className="text-zinc-400">~/.claude/settings.json</code>
+          Agrega esto a <code className="text-zinc-400">~/.claude/settings.json</code>
         </p>
         <pre
           ref={codeRef}
@@ -60,17 +65,32 @@ export default function McpSlide() {
           onClick={copy}
           className="absolute top-10 right-4 text-xs text-zinc-500 hover:text-white transition-colors px-3 py-1 border border-zinc-700 rounded-lg"
         >
-          {copied ? 'Copied!' : 'Copy'}
+          {copied ? '¡Copiado!' : 'Copiar'}
         </button>
       </div>
 
-      <p className="mcp-hint text-zinc-600 text-sm text-center">
-        Works with Claude Code · Cursor · any MCP-compatible LLM
-      </p>
+      <div className="flex items-center gap-4">
+        <p className="mcp-hint text-zinc-600 text-sm text-center">
+          Funciona con Claude Code · Cursor · cualquier LLM compatible con MCP
+        </p>
+        <button
+          onClick={() => setToast(true)}
+          className="flex-shrink-0 text-xs text-zinc-500 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded-full px-4 py-2 transition-colors"
+        >
+          ¿Cómo instalo?
+        </button>
+      </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-600 text-sm tracking-widest uppercase">
         05 / 05
       </div>
+
+      {toast && (
+        <Toast
+          message="1. Copia el JSON de arriba. 2. Pégalo en ~/.claude/settings.json (Claude Code) o en la config MCP de tu editor. 3. Reinicia el agente. Desde ese momento puedes pedirle al LLM que use get_icon, search_icons o list_sets directamente."
+          onClose={() => setToast(false)}
+        />
+      )}
     </div>
   )
 }
