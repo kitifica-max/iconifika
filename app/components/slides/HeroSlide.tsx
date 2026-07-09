@@ -6,14 +6,14 @@ import { HERO_ICONS } from './icons'
 import Toast from '../Toast'
 
 const positions = [
-  { top: '8%', left: '5%', size: 64, rotate: -15, color: '#a78bfa' },
-  { top: '12%', right: '8%', size: 80, rotate: 20, color: '#34d399' },
-  { top: '40%', left: '3%', size: 56, rotate: 10, color: '#f472b6' },
-  { top: '60%', right: '5%', size: 72, rotate: -8, color: '#fbbf24' },
-  { bottom: '15%', left: '8%', size: 60, rotate: 25, color: '#60a5fa' },
-  { bottom: '10%', right: '12%', size: 48, rotate: -20, color: '#f87171' },
-  { top: '25%', left: '18%', size: 40, rotate: 5, color: '#a3e635' },
-  { top: '70%', right: '20%', size: 52, rotate: -12, color: '#e879f9' },
+  { top: '8%', left: '5%', size: 56, rotate: -15 },
+  { top: '12%', right: '8%', size: 64, rotate: 20 },
+  { top: '40%', left: '3%', size: 52, rotate: 10 },
+  { top: '60%', right: '5%', size: 60, rotate: -8 },
+  { bottom: '15%', left: '8%', size: 52, rotate: 25 },
+  { bottom: '10%', right: '12%', size: 44, rotate: -20 },
+  { top: '25%', left: '18%', size: 40, rotate: 5 },
+  { top: '70%', right: '20%', size: 48, rotate: -12 },
 ]
 
 export default function HeroSlide() {
@@ -50,8 +50,8 @@ export default function HeroSlide() {
             width: positions[i].size,
             height: positions[i].size,
             transform: `rotate(${positions[i].rotate}deg)`,
-            color: positions[i].color,
-            opacity: 0.85,
+            color: 'white',
+            opacity: 0.18,
           }}
           dangerouslySetInnerHTML={{ __html: icon.svg }}
         />
