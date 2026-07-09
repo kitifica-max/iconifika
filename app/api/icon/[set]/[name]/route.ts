@@ -1,4 +1,4 @@
-import { getIconSvg } from '@/lib/iconify'
+import { getIconSvg, getIconWithMeta } from '@/lib/iconify'
 import { NextRequest } from 'next/server'
 
 const CORS = {
@@ -17,18 +17,19 @@ export async function GET(
   const { set, name } = await params
   const color = request.nextUrl.searchParams.get('color') ?? undefined
 
-  const svg = getIconSvg(set, name, color)
+  const accept = request.headers.get('accept') ?? ''
 
-  if (!svg) {
-    return Response.json(
-      { error: 'Icon not found', set, name },
-      { status: 404, headers: CORS }
-    )
+  if (accept.includes('application/json')) {
+    const meta = getIconWithMeta(set, name, color)
+    if (!meta) {
+      return Response.json({ error: 'Icon not found', set, name }, { status: 404, headers: CORS })
+    }
+    return Response.json(meta, { headers: CORS })
   }
 
-  const accept = request.headers.get('accept') ?? ''
-  if (accept.includes('application/json')) {
-    return Response.json({ svg, set, name }, { headers: CORS })
+  const svg = getIconSvg(set, name, color)
+  if (!svg) {
+    return Response.json({ error: 'Icon not found', set, name }, { status: 404, headers: CORS })
   }
 
   return new Response(svg, {

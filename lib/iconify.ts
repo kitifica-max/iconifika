@@ -5,6 +5,13 @@ import { join, dirname } from 'path'
 
 export type IconResult = { set: string; name: string; body: string }
 export type SetInfo = { id: string; name: string; total: number }
+export type IconMeta = {
+  svg: string
+  set: string
+  name: string
+  license: { title: string; spdx: string; url: string } | null
+  author: { name: string; url: string } | null
+}
 
 function getCollectionsPath(): string {
   // locate('mdi') → .../node_modules/@iconify/json/json/mdi.json
@@ -48,6 +55,22 @@ export function getIconSvg(set: string, name: string, color?: string): string | 
   }
 
   return svg
+}
+
+export function getIconWithMeta(set: string, name: string, color?: string): IconMeta | null {
+  const svg = getIconSvg(set, name, color)
+  if (!svg) return null
+
+  const collections = loadCollections()
+  const meta = collections[set] ?? {}
+
+  return {
+    svg,
+    set,
+    name,
+    license: meta.license ?? null,
+    author: meta.author ?? null,
+  }
 }
 
 export function searchIcons(query: string, set?: string, limit = 20): IconResult[] {
