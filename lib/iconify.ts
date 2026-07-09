@@ -2,16 +2,14 @@ import { locate } from '@iconify/json'
 import { getIconData, iconToSVG, replaceIDs } from '@iconify/utils'
 import { readFileSync } from 'fs'
 import { join, dirname } from 'path'
-import { createRequire } from 'module'
 
 export type IconResult = { set: string; name: string; body: string }
 export type SetInfo = { id: string; name: string; total: number }
 
-const _require = createRequire(import.meta.url)
-
 function getCollectionsPath(): string {
-  const jsonPkg = _require.resolve('@iconify/json/package.json')
-  return join(dirname(jsonPkg), 'collections.json')
+  // locate('mdi') → .../node_modules/@iconify/json/json/mdi.json
+  // collections.json is two levels up
+  return join(dirname(dirname(locate('mdi'))), 'collections.json')
 }
 
 function loadCollections(): Record<string, any> {
