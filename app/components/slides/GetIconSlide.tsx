@@ -19,6 +19,7 @@ export default function GetIconSlide() {
   const [set, setSet] = useState('lucide')
   const [name, setName] = useState('heart')
   const [color, setColor] = useState('#f472b6')
+  const [error, setError] = useState(false)
   const [toast, setToast] = useState(false)
   const previewRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -26,17 +27,23 @@ export default function GetIconSlide() {
   async function fetchIcon(s = set, n = name, c = color) {
     if (!s.trim() || !n.trim()) return
     setLoading(true)
+    setError(false)
     try {
       const url = `${BASE}/api/icon/${encodeURIComponent(s)}/${encodeURIComponent(n)}?color=${encodeURIComponent(c)}`
       const res = await fetch(url)
       if (res.ok) {
         const svg = await res.text()
-        setSvgContent(svg)
-        if (previewRef.current) {
-          gsap.fromTo(previewRef.current, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' })
+        if (svg.trim().startsWith('<svg')) {
+          setSvgContent(svg)
+          setError(false)
+          if (previewRef.current) {
+            gsap.fromTo(previewRef.current, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' })
+          }
+        } else {
+          setSvgContent(''); setError(true)
         }
       } else {
-        setSvgContent('')
+        setSvgContent(''); setError(true)
       }
     } finally {
       setLoading(false)
@@ -74,7 +81,9 @@ export default function GetIconSlide() {
             dangerouslySetInnerHTML={{ __html: loading ? '' : svgContent }}
           />
           {loading && <p className="text-zinc-600 text-xs">Cargando…</p>}
-          {!loading && !svgContent && <p className="text-zinc-600 text-xs">Icono no encontrado</p>}
+          {!loading && error && (
+            <p className="text-red-500/70 text-xs text-center max-w-[9rem]">No encontrado. Verifica colección y nombre en la slide de búsqueda.</p>
+          )}
           <code className="text-zinc-600 text-xs">{set}:{name}</code>
         </div>
 

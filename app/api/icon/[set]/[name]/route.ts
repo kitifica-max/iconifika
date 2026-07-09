@@ -18,7 +18,7 @@ export async function GET(
   const color = request.nextUrl.searchParams.get('color') ?? undefined
 
   const url = new URL(`${ICONIFY}/${set}/${name}.svg`)
-  if (color) url.searchParams.set('color', encodeURIComponent(color).replace('%23', '#'))
+  if (color) url.searchParams.set('color', color)
 
   const upstream = await fetch(url.toString(), { next: { revalidate: 86400 } })
 

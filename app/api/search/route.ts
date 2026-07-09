@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
   const data = await upstream.json()
   // Iconify returns { icons: ["prefix:name", ...], total: N }
-  const results = (data.icons ?? []).map((id: string) => {
+  const results = (data.icons ?? []).slice(0, limit).map((id: string) => {
     const [iconSet, ...rest] = id.split(':')
     return { set: iconSet, name: rest.join(':') }
   })

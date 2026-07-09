@@ -20,8 +20,9 @@ export default function SearchSlide() {
   async function search(q: string) {
     if (!q.trim()) return
     setLoading(true)
+    setResults([])
     try {
-      const res = await fetch(`${BASE}/api/search?q=${encodeURIComponent(q)}&limit=12`)
+      const res = await fetch(`${BASE}/api/search?q=${encodeURIComponent(q)}&limit=8`)
       if (!res.ok) return
       const { results: r } = await res.json()
       setResults(r)
@@ -87,7 +88,7 @@ export default function SearchSlide() {
       ) : results.length === 0 ? (
         <p className="text-zinc-600 text-sm">Sin resultados para "{query}"</p>
       ) : (
-        <div ref={gridRef} className="grid grid-cols-4 gap-3 w-full max-w-lg">
+        <div ref={gridRef} className="grid grid-cols-4 gap-2 w-full max-w-lg" style={{ maxHeight: '172px', overflow: 'hidden' }}>
           {results.map((r, i) => (
             <div
               key={`${r.set}-${r.name}-${i}`}
