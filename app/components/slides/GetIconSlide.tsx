@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { gsap } from 'gsap'
 import Toast from '../Toast'
 
@@ -13,6 +13,8 @@ const PRESETS = [
   { set: 'heroicons', name: 'bell', color: '#34d399' },
 ]
 
+type Suggestion = { set: string; name: string }
+
 export default function GetIconSlide() {
   const [svgContent, setSvgContent] = useState('')
   const [loading, setLoading] = useState(false)
@@ -21,6 +23,10 @@ export default function GetIconSlide() {
   const [color, setColor] = useState('#f472b6')
   const [error, setError] = useState(false)
   const [toast, setToast] = useState(false)
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
+  const [showSug, setShowSug] = useState(false)
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const nameInputRef = useRef<HTMLInputElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -54,8 +60,27 @@ export default function GetIconSlide() {
 
   function applyPreset(p: typeof PRESETS[0]) {
     setSet(p.set); setName(p.name); setColor(p.color)
+    setSuggestions([]); setShowSug(false)
     fetchIcon(p.set, p.name, p.color)
   }
+
+  function applySuggestion(s: Suggestion) {
+    setSet(s.set); setName(s.name)
+    setSuggestions([]); setShowSug(false)
+    fetchIcon(s.set, s.name, color)
+  }
+
+  const searchSuggestions = useCallback((q: string) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    if (!q.trim() || q.length < 2) { setSuggestions([]); setShowSug(false); return }
+    debounceRef.current = setTimeout(async () => {
+      const res = await fetch(`${BASE}/api/search?q=${encodeURIComponent(q)}&limit=6`)
+      if (!res.ok) return
+      const { results } = await res.json()
+      setSuggestions(results ?? [])
+      setShowSug(true)
+    }, 250)
+  }, [])
 
   const endpoint = `GET /api/icon/${set}/${name}?color=${color}`
 
@@ -82,7 +107,7 @@ export default function GetIconSlide() {
           />
           {loading && <p className="text-zinc-600 text-xs">Cargando…</p>}
           {!loading && error && (
-            <p className="text-red-500/70 text-xs text-center max-w-[9rem]">No encontrado. Verifica colección y nombre en la slide de búsqueda.</p>
+            <p className="text-red-500/70 text-xs text-center max-w-[9rem]">No encontrado. Escribe en el campo Nombre para buscar.</p>
           )}
           <code className="text-zinc-600 text-xs">{set}:{name}</code>
         </div>
@@ -105,22 +130,63 @@ export default function GetIconSlide() {
 
           {/* Inputs */}
           <div className="grid grid-cols-3 gap-2">
-            {[
-              { label: 'Colección', value: set, onChange: setSet, placeholder: 'lucide' },
-              { label: 'Nombre', value: name, onChange: setName, placeholder: 'heart' },
-              { label: 'Color', value: color, onChange: setColor, placeholder: '#f472b6' },
-            ].map(({ label, value, onChange, placeholder }) => (
-              <div key={label} className="flex flex-col gap-1">
-                <label className="text-xs text-zinc-600 uppercase tracking-widest">{label}</label>
-                <input
-                  className="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-zinc-500 w-full"
-                  value={value}
-                  placeholder={placeholder}
-                  onChange={e => onChange(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && fetchIcon()}
-                />
-              </div>
-            ))}
+            {/* Colección */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-zinc-600 uppercase tracking-widest">Colección</label>
+              <input
+                className="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-zinc-500 w-full"
+                value={set}
+                placeholder="lucide"
+                onChange={e => setSet(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && fetchIcon()}
+              />
+            </div>
+
+            {/* Nombre — con autocomplete */}
+            <div className="flex flex-col gap-1 relative">
+              <label className="text-xs text-zinc-600 uppercase tracking-widest">Nombre</label>
+              <input
+                ref={nameInputRef}
+                className="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-zinc-500 w-full"
+                value={name}
+                placeholder="Escribe para buscar…"
+                onChange={e => { setName(e.target.value); searchSuggestions(e.target.value) }}
+                onKeyDown={e => { if (e.key === 'Enter') { setShowSug(false); fetchIcon() } if (e.key === 'Escape') setShowSug(false) }}
+                onFocus={() => suggestions.length > 0 && setShowSug(true)}
+                onBlur={() => setTimeout(() => setShowSug(false), 150)}
+              />
+              {showSug && suggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden z-50 shadow-xl">
+                  {suggestions.map((s, i) => (
+                    <button
+                      key={`${s.set}:${s.name}-${i}`}
+                      onMouseDown={() => applySuggestion(s)}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-zinc-800 transition-colors"
+                    >
+                      <img
+                        src={`${BASE}/api/icon/${s.set}/${s.name}?color=ffffff`}
+                        alt={s.name}
+                        className="w-4 h-4 opacity-60 flex-shrink-0"
+                      />
+                      <span className="text-xs text-zinc-300 truncate">{s.name}</span>
+                      <span className="text-xs text-zinc-600 ml-auto flex-shrink-0">{s.set}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Color */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-zinc-600 uppercase tracking-widest">Color</label>
+              <input
+                className="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-zinc-500 w-full"
+                value={color}
+                placeholder="#f472b6"
+                onChange={e => setColor(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && fetchIcon()}
+              />
+            </div>
           </div>
 
           {/* CTA */}
@@ -150,7 +216,7 @@ export default function GetIconSlide() {
 
       {toast && (
         <Toast
-          message='Elige una colección (ej: lucide, mdi, heroicons), escribe el nombre del icono y un color HEX. Haz clic en "Obtener icono". La respuesta es SVG puro listo para pegar en tu código.'
+          message='Escribe en el campo Nombre para buscar iconos — aparecerán sugerencias. Elige una o escribe el nombre exacto. Ajusta el color HEX y haz clic en "Obtener icono".'
           onClose={() => setToast(false)}
         />
       )}
