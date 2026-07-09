@@ -84,10 +84,10 @@ export default function HeroSlide() {
           />
         </h1>
         <p ref={subRef} className="mt-6 text-zinc-400 text-lg tracking-widest uppercase">
-          API de SVG · +200k iconos · Gratis · Compatible con MCP
+          +200k iconos · Gratis · Para tu IA
         </p>
         <p className="mt-3 text-zinc-600 text-sm max-w-md mx-auto">
-          Entrega iconos SVG optimizados a tus agentes de IA en milisegundos. Sin autenticación, sin límites.
+          Instala Iconifika como herramienta MCP y tu IA podrá buscar e insertar iconos SVG en tu código sin esfuerzo.
         </p>
         <button
           onClick={() => setToast(true)}
@@ -98,12 +98,12 @@ export default function HeroSlide() {
       </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-600 text-sm tracking-widest uppercase">
-        01 / 05
+        01 / 04
       </div>
 
       {toast && (
         <Toast
-          message="Iconifika es una API pública que sirve iconos SVG listos para usar. Consúmela vía HTTP directo o instálala como herramienta MCP en Claude Code, Cursor u otro LLM. Navega con las flechas o las teclas ← → para ver todos los endpoints."
+          message="Iconifika es una herramienta MCP que da acceso a +200k iconos SVG. Instálala en Claude Code, Cursor u otro cliente MCP y tu IA podrá insertar íconos directamente en tu proyecto. Navega con ← → para ver cómo."
           onClose={() => setToast(false)}
         />
       )}

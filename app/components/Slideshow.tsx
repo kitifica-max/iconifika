@@ -7,9 +7,8 @@ import dynamic from 'next/dynamic'
 const slides = [
   { component: dynamic(() => import('./slides/HeroSlide')), label: 'Inicio' },
   { component: dynamic(() => import('./slides/StatsSlide')), label: 'Por qué' },
-  { component: dynamic(() => import('./slides/GetIconSlide')), label: 'Obtener icono' },
-  { component: dynamic(() => import('./slides/SearchSlide')), label: 'Buscar' },
-  { component: dynamic(() => import('./slides/McpSlide')), label: 'MCP' },
+  { component: dynamic(() => import('./slides/InstallSlide')), label: 'Instalar' },
+  { component: dynamic(() => import('./slides/UseSlide')), label: 'Usar' },
 ]
 
 export default function Slideshow() {

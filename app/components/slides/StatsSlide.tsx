@@ -50,12 +50,12 @@ export default function StatsSlide() {
       </button>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-600 text-sm tracking-widest uppercase">
-        02 / 05
+        02 / 04
       </div>
 
       {toast && (
         <Toast
-          message="En lugar de que tu IA genere 200 líneas de SVG, simplemente llama a GET /api/icon/lucide/heart y obtiene el SVG optimizado al instante. Menos tokens, más velocidad, código más limpio."
+          message="En lugar de que tu IA genere 200 líneas de SVG, Iconifika las entrega en una sola llamada MCP. Menos tokens, más velocidad, código más limpio."
           onClose={() => setToast(false)}
         />
       )}
