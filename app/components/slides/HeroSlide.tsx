@@ -28,7 +28,7 @@ export default function HeroSlide() {
   useEffect(() => {
     Promise.all(
       HERO_ICON_IDS.map(async ({ set, name }) => {
-        const res = await fetch(`${BASE}/api/icon/${set}/${name}?color=ffffff`)
+        const res = await fetch(`${BASE}/api/icon/${set}/${name}?color=%23ffffff`)
         if (!res.ok) return null
         const svg = await res.text()
         return { name: `${set}:${name}`, svg }
