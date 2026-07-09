@@ -43,7 +43,7 @@ export function getIconSvg(set: string, name: string, color?: string): string | 
       .join(' ')
   }>${replaceIDs(rendered.body)}</svg>`
 
-  if (color) {
+  if (color && /^#[0-9a-fA-F]{3,8}$|^[a-z]+$/i.test(color)) {
     svg = svg.replace(/currentColor/g, color)
   }
 

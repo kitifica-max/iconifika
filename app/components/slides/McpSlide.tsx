@@ -19,13 +19,14 @@ const config = `{
 export default function McpSlide() {
   const [copied, setCopied] = useState(false)
   const codeRef = useRef<HTMLPreElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.mcp-title', { y: 60, opacity: 0, duration: 0.8, ease: 'power3.out' })
       gsap.from('.mcp-code', { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out', delay: 0.3 })
       gsap.from('.mcp-hint', { opacity: 0, duration: 0.5, delay: 0.7 })
-    })
+    }, containerRef)
     return () => ctx.revert()
   }, [])
 
@@ -36,7 +37,7 @@ export default function McpSlide() {
   }
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center px-12 gap-10">
+    <div ref={containerRef} className="relative w-full h-full flex flex-col items-center justify-center px-12 gap-10">
       <div className="text-center">
         <p className="text-zinc-500 text-xs tracking-widest uppercase mb-4">For AI Workflows</p>
         <h2 className="mcp-title text-[clamp(2.5rem,6vw,5rem)] font-black leading-none tracking-tighter uppercase">
