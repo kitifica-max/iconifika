@@ -103,7 +103,7 @@ export default function HeroSlide() {
 
       {toast && (
         <Toast
-          message="Iconifika es una herramienta MCP que da acceso a +200k iconos SVG. Instálala en Claude Code, Cursor u otro cliente MCP y tu IA podrá insertar íconos directamente en tu proyecto. Navega con ← → para ver cómo."
+          message="Iconifika es un MCP y Skill para Claude con acceso a +200K iconos SVG. Instálalo en Claude, Cursor, Windsurf, Cline, Zed u otro cliente MCP. Tu IA podrá buscar, previsualizar e insertar iconos directo en tu código — sin salir del editor. Navega con ← → para ver cómo."
           onClose={() => setToast(false)}
         />
       )}
