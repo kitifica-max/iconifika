@@ -3,15 +3,15 @@ import { useState } from 'react'
 
 const SKILL_EXAMPLES = [
   {
-    prompt: '"Agrega un ícono de casa en el breadcrumb de inicio"',
+    prompt: '/iconifika agrega un ícono de casa en el breadcrumb de inicio',
     what: 'Claude busca, obtiene el SVG y lo inserta en tu código automáticamente.',
   },
   {
-    prompt: '"Busca opciones de íconos para redes sociales"',
+    prompt: '/iconifika busca opciones de íconos para redes sociales',
     what: 'Claude lista variantes y te pregunta cuál prefieres antes de insertar.',
   },
   {
-    prompt: '"Pon el ícono de check verde cuando el formulario se envíe"',
+    prompt: '/iconifika pon el ícono de check verde cuando el formulario se envíe',
     what: 'Claude elige el ícono correcto del set apropiado y lo pega en contexto.',
   },
 ]
