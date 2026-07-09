@@ -57,7 +57,7 @@ export default function SearchSlide() {
             key={`${r.set}-${r.name}-${i}`}
             title={`${r.set}:${r.name}`}
             className="w-12 h-12 text-white/70 hover:text-white transition-colors cursor-default"
-            dangerouslySetInnerHTML={{ __html: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">${r.body}</svg>` }}
+            dangerouslySetInnerHTML={{ __html: `<svg viewBox="0 0 24 24" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">${r.body}</svg>` }}
           />
         ))}
       </div>

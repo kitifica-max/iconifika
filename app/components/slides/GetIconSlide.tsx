@@ -78,7 +78,7 @@ export default function GetIconSlide() {
         <p className="text-zinc-600 text-xs uppercase tracking-widest">Vista previa</p>
         <div
           ref={previewRef}
-          className="w-40 h-40 flex items-center justify-center"
+          className="w-40 h-40 flex items-center justify-center [&_svg]:w-full [&_svg]:h-full"
           dangerouslySetInnerHTML={{ __html: loading ? '' : svgContent }}
         />
         {loading && <div className="text-zinc-600 text-sm">Cargando...</div>}
