@@ -8,14 +8,26 @@ import Toast from '../Toast'
 const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 
 const positions = [
-  { top: '8%', left: '5%', size: 56, rotate: -15 },
-  { top: '12%', right: '8%', size: 64, rotate: 20 },
-  { top: '40%', left: '3%', size: 52, rotate: 10 },
-  { top: '60%', right: '5%', size: 60, rotate: -8 },
-  { bottom: '15%', left: '8%', size: 52, rotate: 25 },
-  { bottom: '10%', right: '12%', size: 44, rotate: -20 },
-  { top: '25%', left: '18%', size: 40, rotate: 5 },
-  { top: '70%', right: '20%', size: 48, rotate: -12 },
+  // left column
+  { top: '6%',   left: '4%',  size: 52, rotate: -15 },
+  { top: '28%',  left: '2%',  size: 40, rotate: 10  },
+  { top: '50%',  left: '5%',  size: 60, rotate: -8  },
+  { top: '70%',  left: '3%',  size: 36, rotate: 20  },
+  { bottom: '6%',left: '10%', size: 48, rotate: -25 },
+  // right column
+  { top: '5%',   right: '5%', size: 44, rotate: 18  },
+  { top: '22%',  right: '3%', size: 64, rotate: -10 },
+  { top: '45%',  right: '4%', size: 40, rotate: 12  },
+  { top: '65%',  right: '2%', size: 56, rotate: -20 },
+  { bottom: '8%',right: '8%', size: 36, rotate: 15  },
+  // inner-left (slightly inset)
+  { top: '15%',  left: '16%', size: 36, rotate: 8   },
+  { top: '55%',  left: '14%', size: 44, rotate: -5  },
+  { bottom: '18%',left: '20%',size: 32, rotate: 22  },
+  // inner-right
+  { top: '18%',  right: '16%',size: 40, rotate: -12 },
+  { top: '60%',  right: '15%',size: 36, rotate: 6   },
+  { bottom: '20%',right: '18%',size: 48, rotate: -18},
 ]
 
 export default function HeroSlide() {
