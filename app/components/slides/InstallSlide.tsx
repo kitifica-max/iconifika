@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const MCP_URL = 'https://iconifika.kitifica.com/api/mcp'
 const SKILL_URL = 'https://iconifika.kitifica.com/iconifika.skill'
@@ -62,6 +62,14 @@ export default function InstallSlide() {
   const [tab, setTab] = useState<'skill' | 'mcp'>('skill')
   const [activeClient, setActiveClient] = useState('claudecode')
   const [copied, setCopied] = useState<string | null>(null)
+  const [downloads, setDownloads] = useState<number | null>(null)
+
+  useEffect(() => {
+    fetch('/api/skill-downloads')
+      .then(r => r.json())
+      .then(d => setDownloads(d.downloads))
+      .catch(() => {})
+  }, [])
 
   function copy(key: string, text: string) {
     navigator.clipboard.writeText(text)
@@ -164,6 +172,12 @@ export default function InstallSlide() {
           >
             Descargar iconifika.skill
           </a>
+
+          {downloads !== null && (
+            <p className="text-center text-zinc-600 text-xs">
+              {downloads.toLocaleString()} {downloads === 1 ? 'descarga' : 'descargas'}
+            </p>
+          )}
         </div>
       )}
 
