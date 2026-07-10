@@ -75,14 +75,6 @@ export default function Slideshow() {
             </button>
           ))}
         </nav>
-        <a
-          href="https://github.com/kitifica-max/iconifika"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-zinc-500 hover:text-white text-xs tracking-wide transition-colors"
-        >
-          GitHub ↗
-        </a>
       </header>
 
       {/* Slides */}
