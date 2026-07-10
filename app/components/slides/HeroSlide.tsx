@@ -35,7 +35,7 @@ export default function HeroSlide() {
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subRef = useRef<HTMLParagraphElement>(null)
   const [icons, setIcons] = useState<{ name: string; svg: string }[]>([])
-  const [brands, setBrands] = useState<{ label: string; svg: string }[]>([])
+  const [brands, setBrands] = useState<{ label: string; svg: string; svgGreen: string }[]>([])
   const [toast, setToast] = useState(false)
 
   useEffect(() => {
@@ -50,12 +50,15 @@ export default function HeroSlide() {
 
     Promise.all(
       BRAND_ICON_IDS.map(async ({ set, name, label }) => {
-        const res = await fetch(`${BASE}/api/icon/${set}/${name}?color=%23ffffff`)
-        if (!res.ok) return null
-        const svg = await res.text()
-        return { label, svg }
+        const [r1, r2] = await Promise.all([
+          fetch(`${BASE}/api/icon/${set}/${name}?color=%23ffffff`),
+          fetch(`${BASE}/api/icon/${set}/${name}?color=%2310b981`),
+        ])
+        if (!r1.ok) return null
+        const [svg, svgGreen] = await Promise.all([r1.text(), r2.ok ? r2.text() : r1.text()])
+        return { label, svg, svgGreen }
       })
-    ).then(results => setBrands(results.filter(Boolean) as { label: string; svg: string }[]))
+    ).then(results => setBrands(results.filter(Boolean) as { label: string; svg: string; svgGreen: string }[]))
   }, [])
 
   useEffect(() => {
@@ -123,12 +126,12 @@ export default function HeroSlide() {
             <p className="text-[10px] text-zinc-700 tracking-widest uppercase">Incluye íconos de</p>
             <div className="flex flex-wrap justify-center gap-x-5 gap-y-2.5">
               {brands.map(b => (
-                <div key={b.label} className="flex items-center gap-1.5 opacity-30 hover:opacity-60 transition-opacity">
-                  <span
-                    className="w-3.5 h-3.5 flex-shrink-0 [&_svg]:w-full [&_svg]:h-full"
-                    dangerouslySetInnerHTML={{ __html: b.svg }}
-                  />
-                  <span className="text-[10px] text-zinc-400 whitespace-nowrap">{b.label}</span>
+                <div key={b.label} className="flex items-center gap-1.5 opacity-30 hover:opacity-100 group transition-opacity">
+                  <span className="w-3.5 h-3.5 flex-shrink-0 relative [&_svg]:w-full [&_svg]:h-full">
+                    <span className="absolute inset-0 group-hover:opacity-0 transition-opacity" dangerouslySetInnerHTML={{ __html: b.svg }} />
+                    <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" dangerouslySetInnerHTML={{ __html: b.svgGreen }} />
+                  </span>
+                  <span className="text-[10px] text-zinc-400 group-hover:text-emerald-400 whitespace-nowrap transition-colors">{b.label}</span>
                 </div>
               ))}
             </div>
