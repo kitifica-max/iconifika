@@ -126,7 +126,7 @@ export default function InstallSlide() {
           </div>
 
           <div className="flex flex-col gap-3">
-            {activeClient === 'Claude.ai'
+            {(activeClient === 'Claude.ai'
               ? [
                   { text: 'Descarga el archivo de skill' },
                   { text: 'Ábrelo — Claude.ai lo instala automáticamente' },
