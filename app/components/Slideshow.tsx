@@ -127,18 +127,18 @@ export default function Slideshow() {
       </div>
 
       {/* Footer */}
-      <footer className="flex-shrink-0 flex items-center justify-between px-6 py-3 border-t border-zinc-900 z-50">
-        <p className="text-zinc-600 text-xs">
+      <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-6 py-2 sm:py-3 gap-1 sm:gap-0 border-t border-zinc-900 z-50">
+        <p className="text-zinc-600 text-[10px] sm:text-xs">
           Potenciado por{' '}
           <a href="https://iconify.design" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors">
             Iconify
           </a>
           {' '}· Gratis y de código abierto
         </p>
-        <p className="text-zinc-600 text-xs flex items-center gap-3">
+        <p className="text-zinc-600 text-[10px] sm:text-xs flex items-center gap-2 sm:gap-3">
           Un proyecto de{' '}
           <a href="https://kitifica.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity inline-flex items-center">
-            <img src="/logo_kitifica_2.svg" alt="Kitifica" className="h-4" />
+            <img src="/logo_kitifica_2.svg" alt="Kitifica" className="h-3.5 sm:h-4" />
           </a>
           <span>·</span>
           <a href="/terms" className="hover:text-zinc-400 transition-colors">Términos de uso</a>
