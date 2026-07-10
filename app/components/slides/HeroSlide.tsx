@@ -126,7 +126,7 @@ export default function HeroSlide() {
             <p className="text-[10px] text-zinc-700 tracking-widest uppercase">Incluye íconos de</p>
             <div className="flex flex-wrap justify-center gap-x-5 gap-y-2.5">
               {brands.map(b => (
-                <div key={b.label} className="flex items-center gap-1.5 opacity-30 hover:opacity-100 group transition-opacity">
+                <div key={b.label} className="flex items-center gap-1.5 opacity-60 hover:opacity-100 group transition-opacity">
                   <span className="w-3.5 h-3.5 flex-shrink-0 relative [&_svg]:w-full [&_svg]:h-full">
                     <span className="absolute inset-0 group-hover:opacity-0 transition-opacity" dangerouslySetInnerHTML={{ __html: b.svg }} />
                     <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" dangerouslySetInnerHTML={{ __html: b.svgGreen }} />
