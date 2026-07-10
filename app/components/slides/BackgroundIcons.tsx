@@ -65,7 +65,7 @@ export default function BackgroundIcons({ icons: iconDefs }: { icons: IconDef[] 
               height: pos.size,
               transform: `rotate(${pos.rotate}deg)`,
               color: 'white',
-              opacity: 0.15,
+              opacity: 0.12,
             }}
             dangerouslySetInnerHTML={{ __html: icon.svg }}
           />

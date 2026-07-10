@@ -81,7 +81,7 @@ export default function HeroSlide() {
         <div
           key={icon.name}
           ref={el => { iconRefs.current[i] = el }}
-          className="absolute pointer-events-none [&_svg]:w-full [&_svg]:h-full"
+          className={`absolute pointer-events-none [&_svg]:w-full [&_svg]:h-full ${i >= 10 ? 'hidden sm:block' : ''}`}
           style={{
             top: (positions[i] as { top?: string }).top,
             left: (positions[i] as { left?: string }).left,
