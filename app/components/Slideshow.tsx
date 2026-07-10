@@ -56,7 +56,7 @@ export default function Slideshow() {
   }
 
   return (
-    <div className="flex flex-col w-screen h-screen overflow-hidden">
+    <div className="flex flex-col w-screen h-[100dvh] overflow-hidden">
       {/* Header nav */}
       <header className="flex-shrink-0 flex items-center justify-between px-6 py-4 z-50 border-b border-zinc-900">
         <button onClick={() => goTo(0)} className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity">
