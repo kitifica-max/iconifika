@@ -96,7 +96,7 @@ export default function Slideshow() {
         {current > 0 && (
           <button
             onClick={() => goTo(current - 1)}
-            className="hidden sm:block absolute left-2 top-1/2 -translate-y-1/2 z-50 text-zinc-700 hover:text-white transition-colors select-none"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-50 text-zinc-700 hover:text-white transition-colors select-none"
             aria-label="Anterior"
           >
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M12 21a9 9 0 1 0 0-18a9 9 0 0 0 0 18m-4-9l4 4m-4-4h8m-4-4l-4 4"/></svg>
@@ -105,7 +105,7 @@ export default function Slideshow() {
         {current < slides.length - 1 && (
           <button
             onClick={() => goTo(current + 1)}
-            className="hidden sm:block absolute right-2 top-1/2 -translate-y-1/2 z-50 text-zinc-700 hover:text-white transition-colors select-none"
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-50 text-zinc-700 hover:text-white transition-colors select-none"
             aria-label="Siguiente"
           >
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M12 3a9 9 0 1 0 0 18A9 9 0 0 0 12 3m4 9l-4-4m4 4H8m4 4l4-4"/></svg>
