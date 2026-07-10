@@ -106,17 +106,54 @@ export default function InstallSlide() {
 
       {tab === 'skill' && (
         <div className="w-full max-w-xl flex flex-col gap-4">
-          <p className="text-center text-zinc-500 text-xs">Solo para Claude — un archivo, sin comandos ni configuración</p>
+          <p className="text-center text-zinc-500 text-xs">Para Claude.ai y Claude Code — un solo archivo</p>
+
+          {/* Sub-tabs */}
+          <div className="flex gap-2 justify-center">
+            {['Claude.ai', 'Claude Code'].map(c => (
+              <button
+                key={c}
+                onClick={() => setActiveClient(c)}
+                className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+                  activeClient === c
+                    ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10'
+                    : 'border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300'
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
 
           <div className="flex flex-col gap-3">
-            {[
-              { text: 'Descarga el archivo de skill' },
-              { text: 'Ábrelo — Claude Code lo instala automáticamente' },
-              { text: 'Pídele a Claude que busque iconos con Iconifika' },
-            ].map((step, i) => (
-              <div key={i} className="flex items-start gap-3">
-                <span className="w-5 h-5 rounded-full border border-zinc-700 flex items-center justify-center text-[10px] text-zinc-500 flex-shrink-0 mt-0.5">{i + 1}</span>
-                <span className="text-sm text-zinc-400">{step.text}</span>
+            {activeClient === 'Claude.ai'
+              ? [
+                  { text: 'Descarga el archivo de skill' },
+                  { text: 'Ábrelo — Claude.ai lo instala automáticamente' },
+                  { text: 'Escribe /iconifika en cualquier chat' },
+                ]
+              : [
+                  { text: 'Descarga el archivo de skill' },
+                  { text: 'Instálalo en terminal:', code: 'claude skills add ~/Downloads/iconifika.skill' },
+                  { text: 'Escribe /iconifika en Claude Code' },
+                ]
+            ).map((step, i) => (
+              <div key={i} className="flex flex-col gap-1.5">
+                <div className="flex items-start gap-3">
+                  <span className="w-5 h-5 rounded-full border border-zinc-700 flex items-center justify-center text-[10px] text-zinc-500 flex-shrink-0 mt-0.5">{i + 1}</span>
+                  <span className="text-sm text-zinc-400">{step.text}</span>
+                </div>
+                {'code' in step && step.code && (
+                  <div className="ml-8 flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5">
+                    <code className="flex-1 text-emerald-400 text-sm font-mono break-all">{step.code}</code>
+                    <button
+                      onClick={() => copy('skill-cmd', step.code!)}
+                      className="flex-shrink-0 text-xs text-zinc-500 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded-lg px-3 py-1.5 transition-colors"
+                    >
+                      {copied === 'skill-cmd' ? '✓' : 'Copiar'}
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
