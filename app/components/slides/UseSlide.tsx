@@ -124,7 +124,7 @@ export default function UseSlide() {
         </div>
       )}
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-700 text-xs tracking-widest uppercase">
+      <div className="hidden sm:block absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-700 text-xs tracking-widest uppercase">
         04 / 04
       </div>
     </div>

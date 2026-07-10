@@ -52,7 +52,7 @@ export default function StatsSlide() {
         ¿Por qué importa?
       </button>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-600 text-sm tracking-widest uppercase">
+      <div className="hidden sm:block absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-600 text-sm tracking-widest uppercase">
         02 / 04
       </div>
 
