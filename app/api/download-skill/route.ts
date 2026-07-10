@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 export async function GET() {
   try {
     const store = getStore('iconifika')
-    const raw = await store.get('skill-downloads')
+    const raw = await store.get('skill-downloads', { type: 'text' })
     const count = raw ? parseInt(raw) + 1 : 1
     await store.set('skill-downloads', String(count))
   } catch {
