@@ -58,6 +58,20 @@ export const INSTALL_ICON_IDS = [
   { set: 'tabler', name: 'printer' },
 ]
 
+// HeroSlide — brand logos strip (prestigiosas librerías de iconos)
+export const BRAND_ICON_IDS = [
+  { set: 'simple-icons', name: 'materialdesign', label: 'Material' },
+  { set: 'simple-icons', name: 'tailwindcss', label: 'Tailwind' },
+  { set: 'simple-icons', name: 'bootstrap', label: 'Bootstrap' },
+  { set: 'simple-icons', name: 'figma', label: 'Figma' },
+  { set: 'simple-icons', name: 'github', label: 'GitHub' },
+  { set: 'simple-icons', name: 'fontawesome', label: 'Font Awesome' },
+  { set: 'simple-icons', name: 'antdesign', label: 'Ant Design' },
+  { set: 'simple-icons', name: 'ionic', label: 'Ionic' },
+  { set: 'simple-icons', name: 'phosphoricons', label: 'Phosphor' },
+  { set: 'simple-icons', name: 'lucide', label: 'Lucide' },
+]
+
 // Slide 4 — UseSlide: arte, moda, gaming, hogar, mascotas
 export const USE_ICON_IDS = [
   { set: 'tabler', name: 'palette' },

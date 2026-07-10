@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { gsap } from 'gsap'
-import { HERO_ICON_IDS } from './icons'
+import { HERO_ICON_IDS, BRAND_ICON_IDS } from './icons'
 import Toast from '../Toast'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? ''
@@ -35,6 +35,7 @@ export default function HeroSlide() {
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subRef = useRef<HTMLParagraphElement>(null)
   const [icons, setIcons] = useState<{ name: string; svg: string }[]>([])
+  const [brands, setBrands] = useState<{ label: string; svg: string }[]>([])
   const [toast, setToast] = useState(false)
 
   useEffect(() => {
@@ -46,6 +47,15 @@ export default function HeroSlide() {
         return { name: `${set}:${name}`, svg }
       })
     ).then(results => setIcons(results.filter(Boolean) as { name: string; svg: string }[]))
+
+    Promise.all(
+      BRAND_ICON_IDS.map(async ({ set, name, label }) => {
+        const res = await fetch(`${BASE}/api/icon/${set}/${name}?color=%23ffffff`)
+        if (!res.ok) return null
+        const svg = await res.text()
+        return { label, svg }
+      })
+    ).then(results => setBrands(results.filter(Boolean) as { label: string; svg: string }[]))
   }, [])
 
   useEffect(() => {
@@ -107,6 +117,23 @@ export default function HeroSlide() {
         >
           ¿Cómo funciona?
         </button>
+
+        {brands.length > 0 && (
+          <div className="mt-8 flex flex-col items-center gap-3">
+            <p className="text-[10px] text-zinc-700 tracking-widest uppercase">Incluye íconos de</p>
+            <div className="flex flex-wrap justify-center gap-x-5 gap-y-2.5">
+              {brands.map(b => (
+                <div key={b.label} className="flex items-center gap-1.5 opacity-30 hover:opacity-60 transition-opacity">
+                  <span
+                    className="w-3.5 h-3.5 flex-shrink-0 [&_svg]:w-full [&_svg]:h-full"
+                    dangerouslySetInnerHTML={{ __html: b.svg }}
+                  />
+                  <span className="text-[10px] text-zinc-400 whitespace-nowrap">{b.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-600 text-sm tracking-widest uppercase">
