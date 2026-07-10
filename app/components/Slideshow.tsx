@@ -96,16 +96,22 @@ export default function Slideshow() {
         {current > 0 && (
           <button
             onClick={() => goTo(current - 1)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors text-2xl z-50 select-none"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-50 flex items-center gap-1.5 text-zinc-500 hover:text-white border border-zinc-800 hover:border-zinc-600 rounded-lg px-3 py-2 text-xs transition-colors select-none"
             aria-label="Anterior"
-          >←</button>
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            Ant
+          </button>
         )}
         {current < slides.length - 1 && (
           <button
             onClick={() => goTo(current + 1)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors text-2xl z-50 select-none"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-50 flex items-center gap-1.5 text-zinc-500 hover:text-white border border-zinc-800 hover:border-zinc-600 rounded-lg px-3 py-2 text-xs transition-colors select-none"
             aria-label="Siguiente"
-          >→</button>
+          >
+            Sig
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
         )}
 
         <div className="absolute bottom-4 right-6 flex gap-2 z-50">
