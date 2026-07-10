@@ -159,8 +159,7 @@ export default function InstallSlide() {
           </div>
 
           <a
-            href={SKILL_URL}
-            download
+            href="/api/download-skill"
             className="flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black text-sm font-semibold rounded-xl px-6 py-3 transition-colors"
           >
             Descargar iconifika.skill
