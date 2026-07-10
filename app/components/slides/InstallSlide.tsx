@@ -1,5 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
+import BackgroundIcons from './BackgroundIcons'
+import { INSTALL_ICON_IDS } from './icons'
 
 const MCP_URL = 'https://iconifika.kitifica.com/api/mcp'
 const SKILL_URL = 'https://iconifika.kitifica.com/iconifika.skill'
@@ -81,6 +83,7 @@ export default function InstallSlide() {
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center px-8 gap-6">
+      <BackgroundIcons icons={INSTALL_ICON_IDS} />
 
       <div className="text-center">
         <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-black leading-none tracking-tighter uppercase">

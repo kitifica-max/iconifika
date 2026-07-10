@@ -1,5 +1,7 @@
 'use client'
 import { useState } from 'react'
+import BackgroundIcons from './BackgroundIcons'
+import { USE_ICON_IDS } from './icons'
 
 const SKILL_EXAMPLES = [
   {
@@ -40,6 +42,7 @@ export default function UseSlide() {
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center px-8 gap-6">
+      <BackgroundIcons icons={USE_ICON_IDS} />
 
       <div className="text-center">
         <p className="text-zinc-500 text-xs tracking-widest uppercase mb-1">Una vez instalado</p>

@@ -29,3 +29,45 @@ export const HERO_ICON_IDS = [
 
 // ponytail: keep empty export for any legacy imports
 export const HERO_ICONS: { name: string; svg: string }[] = []
+
+// Slide 2 — StatsSlide: naturaleza, viaje, salud, educación, clima
+export const STATS_ICON_IDS = [
+  { set: 'tabler', name: 'leaf' },
+  { set: 'tabler', name: 'plane' },
+  { set: 'tabler', name: 'heartbeat' },
+  { set: 'tabler', name: 'school' },
+  { set: 'tabler', name: 'cloud' },
+  { set: 'tabler', name: 'bike' },
+  { set: 'tabler', name: 'pizza' },
+  { set: 'tabler', name: 'music' },
+  { set: 'tabler', name: 'sun' },
+  { set: 'tabler', name: 'tree' },
+]
+
+// Slide 3 — InstallSlide: herramientas, construcción, ciencia, trabajo, finanzas
+export const INSTALL_ICON_IDS = [
+  { set: 'tabler', name: 'tools' },
+  { set: 'tabler', name: 'building' },
+  { set: 'tabler', name: 'flask' },
+  { set: 'tabler', name: 'briefcase' },
+  { set: 'tabler', name: 'coin' },
+  { set: 'tabler', name: 'rocket' },
+  { set: 'tabler', name: 'shield' },
+  { set: 'tabler', name: 'lock' },
+  { set: 'tabler', name: 'truck' },
+  { set: 'tabler', name: 'printer' },
+]
+
+// Slide 4 — UseSlide: arte, moda, gaming, hogar, mascotas
+export const USE_ICON_IDS = [
+  { set: 'tabler', name: 'palette' },
+  { set: 'tabler', name: 'shirt' },
+  { set: 'tabler', name: 'device-gamepad' },
+  { set: 'tabler', name: 'home' },
+  { set: 'tabler', name: 'paw' },
+  { set: 'tabler', name: 'gift' },
+  { set: 'tabler', name: 'crown' },
+  { set: 'tabler', name: 'flag' },
+  { set: 'tabler', name: 'umbrella' },
+  { set: 'tabler', name: 'book' },
+]

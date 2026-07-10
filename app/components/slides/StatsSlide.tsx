@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import Toast from '../Toast'
+import BackgroundIcons from './BackgroundIcons'
+import { STATS_ICON_IDS } from './icons'
 
 const stats = [
   { value: '200K+', label: 'ICONOS' },
@@ -24,6 +26,7 @@ export default function StatsSlide() {
 
   return (
     <div ref={containerRef} className="relative w-full h-full flex flex-col items-center justify-center px-8">
+      <BackgroundIcons icons={STATS_ICON_IDS} />
       <p className="text-zinc-500 text-sm tracking-widest uppercase mb-2">Por qué Iconifika</p>
       <p className="text-zinc-400 text-base text-center max-w-md mb-12">
         Los LLMs generan SVGs inline desperdiciando miles de tokens. Iconifika los entrega en una sola llamada.
