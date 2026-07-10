@@ -60,6 +60,7 @@ export const INSTALL_ICON_IDS = [
 
 // HeroSlide — brand logos strip (prestigiosas librerías de iconos)
 export const BRAND_ICON_IDS = [
+  { set: 'simple-icons', name: 'google', label: 'Google' },
   { set: 'simple-icons', name: 'materialdesign', label: 'Material' },
   { set: 'simple-icons', name: 'tailwindcss', label: 'Tailwind' },
   { set: 'simple-icons', name: 'bootstrap', label: 'Bootstrap' },
