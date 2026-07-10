@@ -99,7 +99,7 @@ export default function HeroSlide() {
           +200k iconos · Gratis · Para tu IA
         </p>
         <p className="mt-3 text-zinc-600 text-sm max-w-md mx-auto">
-          Instala Iconifika como herramienta MCP y tu IA podrá buscar e insertar iconos SVG en tu código sin esfuerzo.
+          Instala Iconifika como Skill o MCP y tu IA podrá buscar e insertar iconos SVG en tu código sin esfuerzo.
         </p>
         <button
           onClick={() => setToast(true)}
