@@ -96,21 +96,19 @@ export default function Slideshow() {
         {current > 0 && (
           <button
             onClick={() => goTo(current - 1)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-50 flex items-center gap-1.5 text-zinc-500 hover:text-white border border-zinc-800 hover:border-zinc-600 rounded-lg px-3 py-2 text-xs transition-colors select-none"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-50 text-zinc-700 hover:text-white transition-colors select-none"
             aria-label="Anterior"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-            Ant
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M12 21a9 9 0 1 0 0-18a9 9 0 0 0 0 18m-4-9l4 4m-4-4h8m-4-4l-4 4"/></svg>
           </button>
         )}
         {current < slides.length - 1 && (
           <button
             onClick={() => goTo(current + 1)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-50 flex items-center gap-1.5 text-zinc-500 hover:text-white border border-zinc-800 hover:border-zinc-600 rounded-lg px-3 py-2 text-xs transition-colors select-none"
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-50 text-zinc-700 hover:text-white transition-colors select-none"
             aria-label="Siguiente"
           >
-            Sig
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M12 3a9 9 0 1 0 0 18A9 9 0 0 0 12 3m4 9l-4-4m4 4H8m4 4l4-4"/></svg>
           </button>
         )}
 
