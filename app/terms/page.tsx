@@ -51,7 +51,7 @@ Si usas Iconifika fuera de un agente con IA (por ejemplo, consumiendo la API dir
   {
     id: 'contacto',
     title: '7. Contacto',
-    content: `Para dudas sobre estos términos o sobre el cumplimiento de licencias, escríbenos a kitifica@gmail.com.`,
+    content: `Para dudas sobre estos términos o sobre el cumplimiento de licencias, escríbenos a hola@kitifica.com.`,
   },
 ]
 
