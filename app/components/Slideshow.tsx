@@ -137,11 +137,13 @@ export default function Slideshow() {
           </a>
           {' '}· Gratis y de código abierto
         </p>
-        <p className="text-zinc-600 text-xs">
+        <p className="text-zinc-600 text-xs flex items-center gap-3">
           Un proyecto de{' '}
-          <a href="https://kitifica.com" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors">
-            Kitifica
+          <a href="https://kitifica.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity inline-flex items-center">
+            <img src="/logo_kitifica_2.svg" alt="Kitifica" className="h-4" />
           </a>
+          <span>·</span>
+          <a href="/terms" className="hover:text-zinc-400 transition-colors">Términos de uso</a>
         </p>
       </footer>
     </div>
