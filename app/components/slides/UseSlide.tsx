@@ -5,16 +5,16 @@ import { USE_ICON_IDS } from './icons'
 
 const SKILL_EXAMPLES = [
   {
+    prompt: '/iconifika sustituye todos los íconos de este componente por opciones mejores',
+    what: 'Claude revisa el componente, busca alternativas más expresivas y las reemplaza directamente en el código.',
+  },
+  {
     prompt: '/iconifika agrega un ícono de casa en el breadcrumb de inicio',
     what: 'Claude busca, obtiene el SVG y lo inserta en tu código automáticamente.',
   },
   {
     prompt: '/iconifika busca opciones de íconos para redes sociales',
     what: 'Claude lista variantes y te pregunta cuál prefieres antes de insertar.',
-  },
-  {
-    prompt: '/iconifika pon el ícono de check verde cuando el formulario se envíe',
-    what: 'Claude elige el ícono correcto del set apropiado y lo pega en contexto.',
   },
 ]
 
